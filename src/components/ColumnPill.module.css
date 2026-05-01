@@ -1,0 +1,69 @@
+.pill {
+  background-color: var(--color-pill-bg);
+  border-radius: 100px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.pillDark {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.pillCollapsed {
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  padding: 0;
+  background-color: var(--color-text-body, #666);
+  margin-top: 14px; /* visually align with full pill which is ~40px tall */
+}
+
+.pillDark.pillCollapsed {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.label {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-dark);
+  text-transform: lowercase;
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.labelDark {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 11px;
+  color: var(--color-text-light);
+  text-transform: lowercase;
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.labelCollapsed {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* For specific pills like 'pricing' or the ones with capital letters, we can override or just let it inherit */
+.labelCapitalized {
+  text-transform: none;
+}

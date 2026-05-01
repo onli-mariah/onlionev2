@@ -1,0 +1,35 @@
+.footer {
+  padding: 64px 0 48px 0;
+  width: 100vw;
+}
+
+.footerContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.legalRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: center;
+}
+
+.legalContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.singleLineCatchphrase {
+  color: var(--color-text-muted);
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+

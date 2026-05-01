@@ -1,0 +1,81 @@
+.section {
+  padding: var(--space-8) 0;
+}
+
+@media (max-width: 1199px) {
+  .section {
+    padding: var(--space-7) 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 60px 0;
+  }
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--space-6);
+}
+
+.eyebrow {
+  font-size: 11px;
+  color: var(--color-muted);
+  text-transform: lowercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.headline {
+  font-size: clamp(32px, 4vw, 64px);
+  line-height: 1.2;
+  margin-bottom: var(--space-2);
+}
+
+.subheadline {
+  font-size: clamp(17px, 2vw, 24px);
+  font-weight: 300;
+  color: var(--color-text-body);
+  max-width: 800px;
+}
+
+:global(.surface-dark) .subheadline {
+  color: var(--color-text-muted);
+}
+
+.content {
+  width: 100%;
+}
+
+.ctaWrapper {
+  margin-top: var(--space-5);
+  display: flex;
+  justify-content: flex-start;
+}
+
+.ctaPill {
+  background: var(--color-pill-bg);
+  border-radius: 999px;
+  padding: 12px 24px;
+  color: var(--color-text-dark);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: lowercase;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.ctaPill:hover {
+  transform: scale(1.05);
+  background-color: #E0E0E0;
+}
+
+:global(.surface-dark) .ctaPill {
+  background: #FFFFFF;
+  color: #1C1C1A;
+}
+
+:global(.surface-dark) .ctaPill:hover {
+  background: #F6F6F6;
+}

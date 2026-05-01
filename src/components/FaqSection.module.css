@@ -1,0 +1,78 @@
+.faqContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: var(--space-3);
+  min-height: 480px;
+}
+
+.titleColumn {
+  flex: 0 0 25%;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.titleColumnContent {
+  margin-top: var(--space-4);
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.tabsRow {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-3);
+  height: 64px; /* Give it enough height to match normal pills and not jump */
+  margin-bottom: var(--space-2);
+}
+
+.tabItem {
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.answerBlock {
+  width: 100%;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-surface-light);
+  padding: 48px;
+  border-radius: 16px;
+  box-sizing: border-box;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.answerText {
+  font-size: 22px;
+  line-height: 1.6;
+  margin: 0;
+  color: var(--color-text-dark);
+  max-width: 800px;
+  font-weight: 300;
+}
+
+@media (max-width: 1024px) {
+  .faqContainer {
+    flex-direction: column;
+  }
+  .titleColumn {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  .tabsRow {
+    flex-wrap: wrap;
+    height: auto;
+  }
+}

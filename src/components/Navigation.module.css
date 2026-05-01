@@ -1,0 +1,64 @@
+.navContainer {
+  position: fixed;
+  top: 24px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.pill {
+  background: var(--color-pill-bg);
+  border-radius: 999px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.wordmarkPill {
+  padding: 10px 24px;
+  flex: 2;
+}
+
+.wordmark {
+  color: var(--color-text-dark);
+  font-size: 14px;
+  text-transform: lowercase;
+}
+
+.wordmarkBold {
+  font-weight: 300;
+}
+
+.wordmarkRegular {
+  font-weight: 400;
+}
+
+.ctaPillContainer {
+  padding: 10px 24px;
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navLink {
+  color: var(--color-text-dark);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: lowercase;
+  transition: color 0.2s ease;
+}
+
+.navLink:hover {
+  color: #000;
+}
+
+@media (max-width: 767px) {
+  .navContainer {
+    gap: var(--space-1);
+  }
+}

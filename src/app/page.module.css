@@ -1,142 +1,146 @@
-.page {
-  --background: #fafafa;
-  --foreground: #fff;
-
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
-}
-
 .main {
-  display: flex;
-  flex: 1;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.sectionContent {
   width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
+  margin: 0 auto;
 }
 
-.intro {
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.grid4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.grid5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+@media (max-width: 1024px) {
+  .grid3, .grid4, .grid5 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .grid2, .grid3, .grid4, .grid5 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.columnContainer {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
+  height: 100%;
 }
 
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
+.columnImage {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  object-fit: cover;
+  aspect-ratio: 4 / 5;
+  background-color: #eaeaea;
+  margin-bottom: var(--space-3);
 }
 
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
+.largeTextCard {
+  padding: var(--space-4) 0;
 }
 
-.intro a {
+.largeTextCard h3 {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: clamp(24px, 3vw, 36px);
   font-weight: 500;
-  color: var(--text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-4);
+  color: var(--color-text-dark);
 }
 
-.ctas {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
-  gap: 16px;
-  font-size: 14px;
+.largeTextCard p {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text-body);
 }
 
-.ctas a {
-  display: flex;
-  justify-content: center;
+.button {
+  display: inline-flex;
   align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
+  justify-content: center;
+  padding: 12px 24px;
+  background: var(--color-surface-dark);
+  color: var(--color-text-light);
+  border-radius: 100px;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 14px;
   font-weight: 500;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+  margin-top: var(--space-4);
+  width: max-content;
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
-  gap: 8px;
+.button:hover {
+  background: #000;
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+/* Specific pricing tags */
+.tagAvailable {
+  color: #00C853; /* green */
+  font-size: 11px;
+  font-family: var(--font-montserrat), sans-serif;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
+.tagBooked {
+  color: #FF3D00; /* red */
+  font-size: 11px;
+  font-family: var(--font-montserrat), sans-serif;
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
-  }
-
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
+.tagLimited {
+  color: #9E9E9E; /* gray */
+  font-size: 11px;
+  font-family: var(--font-montserrat), sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
+/* FAQ List specific */
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
 
-  .page {
-    --background: #000;
-    --foreground: #000;
-
-    --text-primary: #ededed;
-    --text-secondary: #999;
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
-  }
+.faqCard h4 {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--color-text-light);
+  margin-bottom: var(--space-2);
+}
+.faqCard p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
 }

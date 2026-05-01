@@ -1,34 +1,41 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Surfaces */
+  --surface-light: #f6f6f6;
+  --surface-dark: #2A2A2A;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  /* Colors */
+  --color-muted: #6f655c;
+  --color-text-dark: #171717;
+  --color-text-body: #6f655c;
+  --color-text-light: #FFFFFF;
+  --color-text-muted: #6B6763;
+  --color-border-light: #e5e5e5;
+  --color-border-dark: rgba(255, 255, 255, 0.1);
+  --color-card-dark: #2A2A2A;
+  --color-card-light: #FFFFFF;
 
-html {
-  height: 100%;
-}
+  /* Accent/Feature */
+  --color-khaki: #7A7060;
+  --color-steel: #6A7070;
+  --color-slate: #5A6068;
+  --color-pill-bg: #EAEAEA;
+  
+  /* Status */
+  --status-available: #00C950;
+  --status-booked: #FF6467;
+  --status-limited: #4A90D9;
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Spacing Scale (8px base) */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
+  --space-7: 80px;
+  --space-8: 120px;
+  --space-9: 160px;
+  --space-10: 240px;
 }
 
 * {
@@ -37,13 +44,77 @@ body {
   margin: 0;
 }
 
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--surface-light);
+  color: var(--color-text-dark);
+  font-family: var(--font-montserrat), sans-serif;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* Typography utilities */
+.font-mono {
+  font-family: var(--font-geist-mono), monospace;
+}
+.font-sans {
+  font-family: var(--font-montserrat), sans-serif;
+}
+
+/* Base resets */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* Utility classes for surfaces */
+.surface-light {
+  background-color: transparent;
+}
+
+.surface-dark {
+  background-color: transparent;
+}
+
+/* Section container constraints */
+.section-container {
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .section-container {
+    padding-left: 24px;
+    padding-right: 24px;
   }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .section-container {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .section-container {
+    padding-left: 160px;
+    padding-right: 160px;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+}
+
+.animate-in {
+  opacity: 0;
 }

@@ -1,0 +1,88 @@
+.bottomNavWrapper {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.bottomNavWrapper > * {
+  pointer-events: auto;
+}
+
+@media (max-width: 767px) {
+  .bottomNavWrapper {
+    left: 12px;
+    right: 12px;
+  }
+}
+
+.bottomNav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.pill {
+  height: 36px;
+  width: 40px; /* Inactive width */
+  background: rgba(30, 30, 28, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px; /* height / 2 for pill shape */
+  display: flex;
+  align-items: center;
+  padding: 0 12px; /* padding for content */
+  overflow: hidden;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.number {
+  font-size: 12px;
+  font-weight: 400;
+  color: #FFFFFF;
+  opacity: 0.6;
+  margin-right: 8px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 400;
+  color: #FFFFFF;
+  opacity: 0;
+  display: none; /* Controlled by GSAP */
+}
+
+/* Companion CTA */
+.companionCta {
+  display: flex;
+}
+
+.companionPill {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background: rgba(30, 30, 28, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: lowercase;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.companionPill:hover {
+  background: rgba(40, 40, 38, 0.7);
+  transform: scale(1.02);
+}
