@@ -247,20 +247,20 @@
     overflow: visible;
     display: flex;
     flex-direction: column;
-    gap: var(--space-6);
+    gap: var(--space-2);
   }
 
   .card {
     position: relative;
     -webkit-mask-image: none !important;
     mask-image: none !important;
-    padding: var(--space-6) 0;
+    padding: var(--space-4) 0;
     height: auto;
     min-height: auto;
   }
 
   .card:first-child {
-    padding-top: var(--space-8);
+    padding-top: var(--space-6);
   }
 
   .contentWrapper {
@@ -330,7 +330,7 @@
     grid-column: 1;
     height: 250px;
     min-height: 200px;
-    margin-top: var(--space-4);
+    margin-top: var(--space-2);
     overflow: visible;
   }
 }
