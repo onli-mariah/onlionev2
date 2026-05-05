@@ -1,7 +1,50 @@
 import Hero from "@/components/Hero";
 import Section from "@/components/Section";
-import AccordionSection from "@/components/AccordionSection";
+import ScrollStackSection, { StackCardData } from "@/components/ScrollStackSection";
 import styles from "./page.module.css";
+
+const stackCards: StackCardData[] = [
+  {
+    id: "withonli",
+    pill1: "onli",
+    pill2: "the primitive",
+    pill3: "withonli.com",
+    href: "https://www.withonli.com/",
+    title: "An asset is property owned. That definition is not metaphorical. It is structural.",
+    body: "Onli is not a ledger. It is not a blockchain. It is not a database with better encryption. Onli is ownership technology — the primitive layer on which real digital property is built. One asset. One owner. There is only one.\nEverything down to the asset, the owner, and the Vault. Learn what Onli is, how it works, and what you can build on top of it.\nExplore use cases and white papers.",
+    image: "/images/withonli.png",
+  },
+  {
+    id: "onli-you",
+    pill1: "onli",
+    pill2: "authentication",
+    pill3: "onli.you",
+    href: "https://www.onli.you/",
+    title: "Create your Onli ID. Because there is only one you.",
+    body: "Onli.You is free. Download it on the Apple App Store, verify once, and your identity becomes an unforgeable credential — your Gene. Not an account. Not a username. An owner.\nYou control your identity. You control your assets. Onli provides the infrastructure. Your Vault, your passport, your sovereignty. One profile to rule them all.\nGet the app. Become an owner.",
+    image: "/images/onliyou.jpg",
+  },
+  {
+    id: "onli-cloud",
+    pill1: "onli",
+    pill2: "orchestration",
+    pill3: "onli.cloud",
+    href: "https://www.onli.cloud/",
+    title: "This is where ownership becomes an economy.",
+    body: "Onli.Cloud is the developer console for the Possession Economy. Configure your Genome. Build your Appliance. Manage your Treasury. Issue to your owners. Genotype is destiny — get the design right, and the system works with you everywhere.\nAppliances never touch assets. Owners are always in control. Custody risk is eliminated by design.\nJoin the revolution no one saw coming.",
+    image: "/images/onlicloud.png",
+  },
+  {
+    id: "onli-ai",
+    pill1: "onli",
+    pill2: "intent layer",
+    pill3: "onli.ai",
+    href: "https://www.onli.ai/",
+    title: "What if a single sentence could create a whole economy?",
+    body: "Onli.AI translates natural language into ownership operations. Describe what should happen — the system resolves the path. Natural language changes how you express intent. It does not change who is allowed to authorize it.\nExpression is human. Planning is computational. Authorization is ownership.\nNow go build something intelligent.",
+    image: "/images/onliai.png",
+  }
+];
 
 export default function Home() {
   return (
@@ -58,60 +101,8 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Section: The Stack (Horizontal Accordion) */}
-      <Section id="the-stack" theme="light" className={styles.stackSection}>
-        <div className={`${styles.sectionContent} animate-in`}>
-          <AccordionSection
-            titlePill="the stack"
-            items={[
-              {
-                id: "onli-ai",
-                pillLabel: "onli.ai",
-                image: "/images/onliai.png",
-                href: "https://www.onli.ai/",
-                content: (
-                  <div className={styles.largeTextCard}>
-                    <p>Intent Layer</p>
-                  </div>
-                )
-              },
-              {
-                id: "onli-cloud",
-                pillLabel: "onli.cloud",
-                image: "/images/onlicloud.png",
-                href: "https://www.onli.cloud/",
-                content: (
-                  <div className={styles.largeTextCard}>
-                    <p>Orchestration</p>
-                  </div>
-                )
-              },
-              {
-                id: "onli-you",
-                pillLabel: "onli.you",
-                image: "/images/onliyou.jpg",
-                href: "https://www.onli.you/",
-                content: (
-                  <div className={styles.largeTextCard}>
-                    <p>Authentication</p>
-                  </div>
-                )
-              },
-              {
-                id: "withonli",
-                pillLabel: "withonli.com",
-                image: "/images/withonli.png",
-                href: "https://www.withonli.com/",
-                content: (
-                  <div className={styles.largeTextCard}>
-                    <p>How it Works</p>
-                  </div>
-                )
-              }
-            ]}
-          />
-        </div>
-      </Section>
+      {/* Section: The Stack (Scrollable Stacked Cards) */}
+      <ScrollStackSection cards={stackCards} />
     </main>
   );
 }

@@ -108,9 +108,9 @@ ul, ol {
 
 @media (min-width: 1200px) {
   .section-container {
-    padding-left: 160px;
-    padding-right: 160px;
-    max-width: 1600px;
+    padding-left: 32px;
+    padding-right: 32px;
+    max-width: 1800px;
     margin: 0 auto;
   }
 }
