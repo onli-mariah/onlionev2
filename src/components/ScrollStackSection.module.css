@@ -267,6 +267,7 @@
     height: auto;
     display: flex;
     flex-direction: column;
+    overflow: visible;
   }
 
   .pillsRow {
@@ -301,12 +302,16 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
+    overflow: visible;
+    flex: none;
   }
 
   .textContent {
     grid-column: 1;
     padding-right: 0;
     justify-content: flex-start;
+    overflow: visible;
+    min-height: auto;
   }
 
   .textTitle {
@@ -316,6 +321,9 @@
 
   .textBody {
     font-size: 1rem;
+    overflow: visible;
+    flex: none;
+    min-height: auto;
   }
 
   .imageContainer {
@@ -323,5 +331,6 @@
     height: 250px;
     min-height: 200px;
     margin-top: var(--space-4);
+    overflow: visible;
   }
 }
