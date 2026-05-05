@@ -1,14 +1,13 @@
 .heroSection {
   position: relative;
   width: 100%;
-  height: 40vh;
-  min-height: 350px;
+  min-height: 60svh; /* Reduced from 100svh to ensure first section is visible */
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: var(--color-surface-light);
-  padding-top: 500px;
-  padding-bottom: 200px;
+  padding-top: 80px; /* Accounts for fixed header */
+  padding-bottom: 40px;
 }
 
 .heroLeft {
@@ -33,6 +32,8 @@
     justify-content: center;
     gap: var(--space-4);
     text-align: center;
-    height: 40vh;
+    min-height: 50svh; /* Reduced for mobile */
+    padding-top: 60px;
+    padding-bottom: 40px;
   }
 }

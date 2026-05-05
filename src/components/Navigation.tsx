@@ -24,17 +24,22 @@ export default function Navigation() {
     <nav className={`${styles.navContainer} section-container ${scrolled ? styles.scrolled : ""}`}>
       {/* Left Pill: Wordmark */}
       <div className={`${styles.pill} ${styles.wordmarkPill} animate-in`}>
-        <Link href="/" className={`${styles.wordmark} inter`}>
-          <span className={styles.wordmarkBold}>onli</span>
-          <span className={styles.wordmarkRegular}>.one</span>
+        <Link href="/" className={`${styles.wordmark}`}>
+          <span className={styles.wordmarkBold}>only</span>
+          <span className={styles.wordmarkRegular}>.fyi</span>
         </Link>
       </div>
 
-      {/* Right Pill: CTA */}
+      {/* Right Pill: Dropdown Navigation */}
       <div className={`${styles.pill} ${styles.ctaPillContainer} animate-in`}>
-        <Link href="#get-started" className={`${styles.navLink} inter`}>
-          get started &rarr;
-        </Link>
+        <div className={styles.dropdownContainer}>
+          <span className={styles.dropdownTrigger}>Categories ▾</span>
+          <div className={styles.dropdownMenu}>
+            <Link href="/white-papers" className={styles.dropdownItem}>White Papers</Link>
+            <Link href="/use-cases" className={styles.dropdownItem}>Use Cases</Link>
+            <Link href="/publications" className={styles.dropdownItem}>Publications</Link>
+          </div>
+        </div>
       </div>
     </nav>
   );

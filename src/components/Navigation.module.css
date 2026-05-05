@@ -17,6 +17,7 @@
   display: flex;
   align-items: center;
   transition: background-color 0.3s ease;
+  position: relative;
 }
 
 .wordmarkPill {
@@ -28,6 +29,7 @@
   color: var(--color-text-dark);
   font-size: 14px;
   text-transform: lowercase;
+  font-family: var(--font-montserrat);
 }
 
 .wordmarkBold {
@@ -38,8 +40,69 @@
   font-weight: 400;
 }
 
-.ctaPillContainer {
+.dropdownContainer {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.dropdownTrigger {
+  cursor: pointer;
+  color: var(--color-text-dark);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: lowercase;
+  transition: color 0.2s ease;
   padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dropdownTrigger:hover {
+  color: #000;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: var(--color-pill-bg);
+  border-radius: 16px;
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.dropdownContainer:hover .dropdownMenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdownItem {
+  padding: 10px 24px;
+  color: var(--color-text-dark);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.dropdownItem:hover {
+  background: rgba(0, 0, 0, 0.03);
+  color: #000;
+}
+
+.ctaPillContainer {
   flex: 1;
   display: flex;
   justify-content: flex-end;
