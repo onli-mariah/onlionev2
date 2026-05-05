@@ -7,9 +7,9 @@ export default function Hero() {
       <div className={`${styles.heroLeft} animate-in`}>
         trust without chains
       </div>
-      <div className={`${styles.heroRight} animate-in`} style={{ fontFamily: 'var(--font-montserrat)' }}>
-        <span style={{ fontWeight: 300, color: 'var(--color-text-dark)' }}>only</span>
-        <span style={{ fontWeight: 400, color: 'var(--color-text-body)' }}>.fyi</span>
+      <div className={`${styles.heroRight} animate-in`}>
+        <span style={{ fontWeight: 300, color: 'var(--color-text-dark)' }}>onli</span>
+        <span style={{ fontWeight: 400, color: 'var(--color-text-body)' }}>.one</span>
       </div>
     </section>
   );
