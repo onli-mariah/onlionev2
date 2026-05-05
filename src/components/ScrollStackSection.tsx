@@ -37,6 +37,7 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
 
   const [grid, setGrid] = useState({ cols: 14, rows: 10 });
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -47,6 +48,7 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
       const cols = getGridCols(width);
       const rows = Math.max(1, Math.round(cols * (height / width)));
       setGrid({ cols, rows });
+      setIsMobile(width < 768);
     }
 
     handleResize();
@@ -68,9 +70,9 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
     if (!mounted || cards.length === 0) return;
 
     const totalCards = cards.length;
-    let mm = gsap.matchMedia(containerRef); // Pass scope to inherit context
+    const mm = gsap.matchMedia(containerRef);
 
-    // Desktop & Tablet
+    // Desktop & Tablet - Grid mask reveal animation
     mm.add("(min-width: 768px)", () => {
       gsap.set(cardsRef.current, { 
         yPercent: 0,
@@ -94,14 +96,14 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
         tl.to({}, { duration: 1 }); // Pause to show the previous card
 
         const cells = gsap.utils.toArray(`.mask-cell-${i}`);
-        const ordered = [];
+        const ordered: Element[] = [];
 
         for (let x = 0; x < grid.cols; x++) {
-          const column = [];
+          const column: Element[] = [];
           for (let y = 0; y < grid.rows; y++) {
             const index = y * grid.cols + x;
             if (cells[index]) {
-              column.push(cells[index]);
+              column.push(cells[index] as Element);
             }
           }
           const shuffledColumn = gsap.utils.shuffle(column);
@@ -121,32 +123,10 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
       tl.to({}, { duration: 1 }); // Pause at the end
     });
 
-    // Mobile
+    // Mobile - No GSAP animation, CSS handles the stacked layout
     mm.add("(max-width: 767px)", () => {
-      gsap.set(cardsRef.current, { 
-        yPercent: (i) => (i === 0 ? 0 : 100),
-        zIndex: (i) => i
-      });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: `+=${totalCards * 120}%`, // Gives it a nice scroll length
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-        }
-      });
-
-      for (let i = 1; i < totalCards; i++) {
-        tl.to(cardsRef.current[i], {
-          yPercent: 0,
-          duration: 1,
-          ease: "none"
-        });
-        tl.to({}, { duration: 0.2 }); // small pause
-      }
+      // Clear any GSAP-applied styles so CSS can take over
+      gsap.set(cardsRef.current, { clearProps: "all" });
     });
 
     return () => mm.revert();
@@ -155,7 +135,7 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
   // Do not render masks until mounted on client to prevent hydration mismatch
   return (
     <section className={styles.container} ref={containerRef}>
-      {mounted && (
+      {mounted && !isMobile && (
         <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }}>
           <defs>
             {cards.map((_, i) => {
@@ -198,7 +178,8 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
 
       <div className={styles.stickyWrapper}>
         {cards.map((card, index) => {
-          const maskStyle = index > 0 && mounted ? {
+          // Only apply masks on desktop - mobile uses simple stacking
+          const maskStyle = index > 0 && mounted && !isMobile ? {
             WebkitMaskImage: `url(#card-mask-${index})`,
             maskImage: `url(#card-mask-${index})`,
             WebkitMaskSize: '100% 100%',

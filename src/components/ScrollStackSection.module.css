@@ -141,14 +141,30 @@
 
 /* Mobile Layout */
 @media (max-width: 767px) {
+  .stickyWrapper {
+    position: relative;
+    height: auto;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
   .card {
+    position: relative;
     -webkit-mask-image: none !important;
     mask-image: none !important;
-    padding: 100px 0 20px 0; /* Add top padding to account for header, bottom padding for breathing room */
+    padding: var(--space-6) 0;
+    height: auto;
+    min-height: auto;
+  }
+
+  .card:first-child {
+    padding-top: var(--space-8);
   }
 
   .contentWrapper {
-    height: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
   }
@@ -204,8 +220,8 @@
 
   .imageContainer {
     grid-column: 1;
-    flex-grow: 1;
+    height: 250px;
     min-height: 200px;
-    margin-top: auto;
+    margin-top: var(--space-4);
   }
 }
