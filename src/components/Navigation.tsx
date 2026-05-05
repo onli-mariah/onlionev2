@@ -33,7 +33,7 @@ export default function Navigation() {
       {/* Right Pill: CTA */}
       <div className={`${styles.pill} ${styles.ctaPillContainer} animate-in`}>
         <Link href="#get-started" className={`${styles.navLink} inter`}>
-          get started &rarr;
+          get started
         </Link>
       </div>
     </nav>

@@ -16,6 +16,14 @@ export default function Footer() {
             <h4 className={styles.columnHeader}>Legal</h4>
             <Link href="/privacypolicy" className={styles.footerLink}>Privacy Policy</Link>
           </div>
+
+          <div className={styles.footerColumn}>
+            <h4 className={styles.columnHeader}>onli.ai</h4>
+            <a href="https://onli.cloud/" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>onli.cloud</a>
+            <a href="https://www.onli.one/" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>onli.one</a>
+            <a href="https://www.onli.you/" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>onli.you</a>
+            <a href="https://www.withonli.com/" target="_blank" rel="noopener noreferrer" className={styles.footerLink}>withonli.com</a>
+          </div>
         </div>
 
         <div className={styles.copyrightRow}>

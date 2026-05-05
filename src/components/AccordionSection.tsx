@@ -26,9 +26,6 @@ export default function AccordionSection({ titlePill, items, theme = "light" }: 
     <div className={styles.accordionContainer}>
       <div className={styles.titleColumn}>
         <ColumnPill label={titlePill} theme={theme} />
-        <div key={activeIndex} className={styles.titleColumnContent}>
-          {items[activeIndex]?.content}
-        </div>
       </div>
 
       <div className={styles.itemsContainer}>
@@ -51,6 +48,11 @@ export default function AccordionSection({ titlePill, items, theme = "light" }: 
               </div>
               
               <div className={`${styles.contentWrapper} ${isActive ? styles.contentActive : styles.contentCollapsed}`}>
+                {isActive && (
+                  <div className={styles.titleColumnContent}>
+                    {item.content}
+                  </div>
+                )}
                 {item.customVisual ? (
                   item.customVisual
                 ) : item.image ? (

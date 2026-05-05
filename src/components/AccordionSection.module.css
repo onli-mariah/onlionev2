@@ -14,7 +14,8 @@
 }
 
 .titleColumnContent {
-  margin-top: var(--space-4);
+  margin-top: 0;
+  margin-bottom: var(--space-2);
   animation: fadeIn 0.4s ease forwards;
 }
 
@@ -48,8 +49,9 @@
 }
 
 .header {
-  height: 64px; /* Give it enough height to match normal pills and not jump */
+  min-height: 64px; /* Give it enough height to match normal pills and not jump */
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   padding-top: 0;
 }
@@ -91,6 +93,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 16px;
 }
 
 .content {
@@ -102,26 +105,41 @@
 @media (max-width: 1024px) {
   .accordionContainer {
     flex-direction: column;
+    min-height: auto;
+    gap: 5px; /* Force exactly 5px gap between title and items */
   }
   .titleColumn {
     flex: 0 0 auto;
     width: 100%;
+    margin-bottom: 0;
   }
   .itemsContainer {
-    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 5px; /* Distance between inline pill and dots */
   }
   .accordionItem {
-    transition: none;
+    display: contents;
   }
-  .active, .collapsed {
+  .header {
+    min-height: auto;
+    margin-bottom: 0;
+  }
+  .active > .header {
     flex: 0 0 auto;
+  }
+  .collapsed > .header {
+    flex: 0 0 40px;
+  }
+  .contentWrapper {
     width: 100%;
+    order: 99;
+    margin-top: 0; /* Let itemsContainer gap handle the 5px distance */
   }
   .contentCollapsed {
     display: none;
   }
-  .header {
-    height: auto;
-    margin-bottom: var(--space-2);
+  .imageContainer {
+    height: 400px;
+    min-height: unset;
   }
 }
