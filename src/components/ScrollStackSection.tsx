@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import styles from './ScrollStackSection.module.css';
 
@@ -65,86 +66,76 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
     };
   }, []);
 
-  // Use useLayoutEffect for GSAP to avoid flashing
-  useLayoutEffect(() => {
+  useGSAP(() => {
     if (!mounted || cards.length === 0) return;
 
-    // Kill any existing ScrollTriggers first
-    ScrollTrigger.getAll().forEach(st => st.kill());
-
-    // Clear any previously set GSAP styles
-    cardsRef.current.forEach(card => {
-      if (card) {
-        gsap.set(card, { clearProps: 'all' });
-      }
-    });
-
-    // Skip GSAP animations entirely on mobile - CSS handles the layout
-    if (isMobile) {
-      return;
-    }
-
     const totalCards = cards.length;
+    const mm = gsap.matchMedia(containerRef);
 
-    // Desktop & Tablet animation
-    gsap.set(cardsRef.current, { 
-      yPercent: 0,
-      zIndex: (i) => i
-    });
-
-    const totalScroll = (totalCards * 2 - 1) * 100;
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: `+=${totalScroll}%`,
-        pin: true,
-        scrub: 1,
-        invalidateOnRefresh: true,
-      }
-    });
-
-    for (let i = 1; i < totalCards; i++) {
-      tl.to({}, { duration: 1 }); // Pause to show the previous card
-
-      const cells = gsap.utils.toArray(`.mask-cell-${i}`);
-      const ordered: Element[] = [];
-
-      for (let x = 0; x < grid.cols; x++) {
-        const column: Element[] = [];
-        for (let y = 0; y < grid.rows; y++) {
-          const index = y * grid.cols + x;
-          if (cells[index]) {
-            column.push(cells[index] as Element);
-          }
-        }
-        const shuffledColumn = gsap.utils.shuffle(column);
-        ordered.push(...shuffledColumn);
-      }
-
-      tl.to(ordered, {
-        opacity: 1,
-        duration: 1,
-        ease: 'power3.out',
-        stagger: {
-          each: 0.02,
-        },
+    // Desktop & Tablet - Grid mask reveal animation
+    mm.add("(min-width: 768px)", () => {
+      gsap.set(cardsRef.current, { 
+        yPercent: 0,
+        zIndex: (i) => i
       });
-    }
 
-    tl.to({}, { duration: 1 }); // Pause at the end
+      const totalScroll = (totalCards * 2 - 1) * 100;
 
-    return () => {
-      tl.kill();
-      ScrollTrigger.getAll().forEach(st => st.kill());
-    };
-  }, [mounted, grid, cards.length, isMobile]);
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: `+=${totalScroll}%`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+        }
+      });
+
+      for (let i = 1; i < totalCards; i++) {
+        tl.to({}, { duration: 1 }); // Pause to show the previous card
+
+        const cells = gsap.utils.toArray(`.mask-cell-${i}`);
+        const ordered: Element[] = [];
+
+        for (let x = 0; x < grid.cols; x++) {
+          const column: Element[] = [];
+          for (let y = 0; y < grid.rows; y++) {
+            const index = y * grid.cols + x;
+            if (cells[index]) {
+              column.push(cells[index] as Element);
+            }
+          }
+          const shuffledColumn = gsap.utils.shuffle(column);
+          ordered.push(...shuffledColumn);
+        }
+
+        tl.to(ordered, {
+          opacity: 1,
+          duration: 1,
+          ease: 'power3.out',
+          stagger: {
+            each: 0.02,
+          },
+        });
+      }
+
+      tl.to({}, { duration: 1 }); // Pause at the end
+    });
+
+    // Mobile - No GSAP animation, CSS handles the stacked layout
+    mm.add("(max-width: 767px)", () => {
+      // Clear any GSAP-applied styles so CSS can take over
+      gsap.set(cardsRef.current, { clearProps: "all" });
+    });
+
+    return () => mm.revert();
+  }, { scope: containerRef, dependencies: [mounted, grid, cards.length] });
 
   // Do not render masks until mounted on client to prevent hydration mismatch
   return (
     <section className={styles.container} ref={containerRef}>
-      {mounted && (
+      {mounted && !isMobile && (
         <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }}>
           <defs>
             {cards.map((_, i) => {
