@@ -1,5 +1,3 @@
-Post at onli.support URL
-
 **Privacy Policy**
 
 Last updated: September 24, 2025
