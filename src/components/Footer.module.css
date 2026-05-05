@@ -1,5 +1,5 @@
 .footer {
-  margin-top: 15px;
+  margin-top: 35px;
   padding: 24px 0 40px 0;
   width: 100vw;
   background-color: var(--surface-light);
@@ -19,6 +19,9 @@
 }
 
 @media (max-width: 768px) {
+  .footer {
+    margin-top: 15px;
+  }
   .footerGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-5) var(--space-4);
