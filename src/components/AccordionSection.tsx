@@ -10,6 +10,7 @@ interface AccordionItem {
   image?: string;
   customVisual?: React.ReactNode;
   content: React.ReactNode;
+  href?: string;
 }
 
 interface AccordionSectionProps {
@@ -40,16 +41,30 @@ export default function AccordionSection({ titlePill, items, theme = "light" }: 
               onClick={() => setActiveIndex(index)}
             >
               <div className={styles.header}>
-                <ColumnPill label={item.pillLabel} theme={theme} collapsed={!isActive} />
+                {isActive && item.href ? (
+                  <a href={item.href} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block' }} onClick={(e) => e.stopPropagation()}>
+                    <ColumnPill label={item.pillLabel} theme={theme} collapsed={!isActive} />
+                  </a>
+                ) : (
+                  <ColumnPill label={item.pillLabel} theme={theme} collapsed={!isActive} />
+                )}
               </div>
               
               <div className={`${styles.contentWrapper} ${isActive ? styles.contentActive : styles.contentCollapsed}`}>
                 {item.customVisual ? (
                   item.customVisual
                 ) : item.image ? (
-                  <div className={styles.imageContainer}>
-                    <img src={item.image} alt={item.pillLabel} className={styles.image} />
-                  </div>
+                  item.href ? (
+                    <a href={item.href} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }} onClick={(e) => e.stopPropagation()}>
+                      <div className={styles.imageContainer}>
+                        <img src={item.image} alt={item.pillLabel} className={styles.image} />
+                      </div>
+                    </a>
+                  ) : (
+                    <div className={styles.imageContainer}>
+                      <img src={item.image} alt={item.pillLabel} className={styles.image} />
+                    </div>
+                  )
                 ) : null}
               </div>
             </div>

@@ -144,3 +144,18 @@
   color: rgba(255, 255, 255, 0.6);
   font-size: 14px;
 }
+
+.mainTextSection {
+  padding-bottom: 0 !important;
+  padding-top: 10svh !important; /* Mobile friendly top padding */
+}
+
+@media (min-width: 768px) {
+  .mainTextSection {
+    padding-top: 15svh !important; /* Screen detector proportional top padding */
+  }
+}
+
+.stackSection {
+  padding-top: var(--space-4) !important; /* Reduced padding underneath main text */
+}
