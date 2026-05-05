@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: space-between;
   background-color: var(--color-surface-light);
-  padding-top: calc(20svh + 40px); /* Adjusted to compensate for text line-height/margins */
+  padding-top: 40svh; /* Doubled to compensate for text line-height/margins */
   padding-bottom: 20svh; /* Even bottom padding */
 }
 
