@@ -139,6 +139,48 @@
   display: block;
 }
 
+/* Tablet/Small Laptop Layout - stacked like mobile but with more spacing */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .stickyWrapper {
+    position: relative;
+    height: auto;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .card {
+    position: relative;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    padding: var(--space-8) 0;
+    height: auto;
+    min-height: auto;
+  }
+
+  .contentWrapper {
+    height: auto;
+  }
+
+  .bodyGrid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .textContent {
+    grid-column: 1;
+    padding-right: 0;
+  }
+
+  .imageContainer {
+    grid-column: 1;
+    height: 400px;
+    min-height: 300px;
+  }
+}
+
 /* Mobile Layout */
 @media (max-width: 767px) {
   .stickyWrapper {
