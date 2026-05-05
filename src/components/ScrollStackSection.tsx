@@ -121,32 +121,15 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
       tl.to({}, { duration: 1 }); // Pause at the end
     });
 
-    // Mobile
+    // Mobile - use simpler stacked layout without complex pinning
     mm.add("(max-width: 767px)", () => {
+      // Reset any transforms on mobile
       gsap.set(cardsRef.current, { 
-        yPercent: (i) => (i === 0 ? 0 : 100),
-        zIndex: (i) => i
+        yPercent: 0,
+        zIndex: (i) => i,
+        position: 'relative',
+        clearProps: 'transform'
       });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: `+=${totalCards * 120}%`, // Gives it a nice scroll length
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-        }
-      });
-
-      for (let i = 1; i < totalCards; i++) {
-        tl.to(cardsRef.current[i], {
-          yPercent: 0,
-          duration: 1,
-          ease: "none"
-        });
-        tl.to({}, { duration: 0.2 }); // small pause
-      }
     });
 
     return () => mm.revert();
