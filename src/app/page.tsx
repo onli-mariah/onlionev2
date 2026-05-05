@@ -4,7 +4,6 @@ import Card from "@/components/Card";
 import ColumnPill from "@/components/ColumnPill";
 import AccordionSection from "@/components/AccordionSection";
 import FaqSection from "@/components/FaqSection";
-import BottomNav from "@/components/BottomNav";
 import styles from "./page.module.css";
 import Link from "next/link";
 
@@ -20,11 +19,6 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <BottomNav 
-        sections={sections}
-        companionCtaText="Chat with Onli.Ai"
-        companionCtaHref="#"
-      />
       <Hero />
 
       {/* Section 001: What is an Onli */}
