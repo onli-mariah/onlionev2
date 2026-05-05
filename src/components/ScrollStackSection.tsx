@@ -48,7 +48,8 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
       const cols = getGridCols(width);
       const rows = Math.max(1, Math.round(cols * (height / width)));
       setGrid({ cols, rows });
-      setIsMobile(width < 768);
+      // Treat tablets and mobile the same - stacked layout without pinning
+      setIsMobile(width <= 1024);
     }
 
     handleResize();
@@ -72,8 +73,8 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
     const totalCards = cards.length;
     const mm = gsap.matchMedia(containerRef);
 
-    // Desktop & Tablet - Grid mask reveal animation
-    mm.add("(min-width: 768px)", () => {
+    // Desktop only (large screens) - Grid mask reveal animation
+    mm.add("(min-width: 1025px)", () => {
       gsap.set(cardsRef.current, { 
         yPercent: 0,
         zIndex: (i) => i
@@ -123,8 +124,8 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
       tl.to({}, { duration: 1 }); // Pause at the end
     });
 
-    // Mobile - No GSAP animation, CSS handles the stacked layout
-    mm.add("(max-width: 767px)", () => {
+    // Mobile & Tablet - No GSAP animation, CSS handles the stacked layout
+    mm.add("(max-width: 1024px)", () => {
       // Clear any GSAP-applied styles so CSS can take over
       gsap.set(cardsRef.current, { clearProps: "all" });
     });
