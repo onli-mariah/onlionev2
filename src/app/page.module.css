@@ -160,3 +160,9 @@
   padding-top: var(--space-4) !important; /* Reduced padding underneath main text */
   padding-bottom: 0 !important;
 }
+
+@media (max-width: 767px) {
+  .stackSection {
+    padding-bottom: 20px !important;
+  }
+}
