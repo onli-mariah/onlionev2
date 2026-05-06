@@ -68,10 +68,10 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
 
     // Desktop only (large screens)
     mm.add("(min-width: 1025px)", () => {
-      // Scroll distance calculation - lighter feel for slide animation
-      const scrollPerTransition = 3;
-      const initialHold = 1.5;
-      const finalHold = 1.5;
+      // Scroll distance - one scroll per card transition
+      const scrollPerTransition = 2;
+      const initialHold = 1;
+      const finalHold = 1;
       const totalScroll = (initialHold + (totalCards - 1) * scrollPerTransition + finalHold) * 100;
 
       const tl = gsap.timeline({
@@ -80,12 +80,12 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
           start: "top top",
           end: `+=${totalScroll}%`,
           pin: true,
-          scrub: 1.5,
+          scrub: 1,
           invalidateOnRefresh: true,
         }
       });
 
-      // Initial hold - keep first card visible briefly
+      // Initial hold - one scroll before transition
       tl.to({}, { duration: initialHold });
 
       // Slide-up animation - each card slides up from below
@@ -100,12 +100,12 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
       });
       
       for (let i = 1; i < totalCards; i++) {
-        tl.to({}, { duration: 1.5 }); // Hold current card
+        tl.to({}, { duration: 1 }); // Hold current card for one scroll
         
         // Slide the next card up
         tl.to(cardsRef.current[i], {
           yPercent: 0,
-          duration: 1.5,
+          duration: 1,
           ease: 'power2.inOut',
         }, `card${i}`);
       }
