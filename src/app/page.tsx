@@ -8,8 +8,8 @@ const onliCards: OnliCardData[] = [
   {
     id: "onli-one",
     pill1: "onli",
-    pill2: "the protocol and the network",
-    pill3: "onli one",
+    pill2: "onli one",
+    pill3: "the protocol and the network",
     title: "The protocol and private network for moving digital property.",
     body: [
       "Onli One lets owners, vaults, appliances, and services connect directly when a digital asset needs to move — without public exposure, complex networking, or trusted intermediaries.",
