@@ -58,8 +58,8 @@ export default function Home() {
             {/* Pills Row */}
             <div className={styles.onliOnePillsRow}>
               <div className={styles.onliOnePill}>0.0 onli</div>
-              <div className={styles.onliOnePill}>onli one</div>
               <div className={styles.onliOnePill}>the protocol and the network</div>
+              <div className={styles.onliOnePill}>onli one</div>
             </div>
             
             {/* Body Grid */}
