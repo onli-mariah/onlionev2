@@ -21,7 +21,7 @@ const onliCards: OnliCardData[] = [
   },
   {
     id: "onli-asset",
-    pill1: "onli",
+    pill1: "with.onli",
     pill2: "the primitive",
     pill3: "hyper-dimensional vector storage object",
     title: "An asset is property owned. Onli is an asset class.",
@@ -36,16 +36,6 @@ const onliCards: OnliCardData[] = [
 ];
 
 const stackCards: StackCardData[] = [
-  {
-    id: "withonli",
-    pill1: "with onli",
-    pill2: "how it works",
-    pill3: "read use cases and white papers",
-    href: "https://withonli.com/",
-    title: "An asset is property owned. That definition is not metaphorical. It is structural.",
-    body: "Onli is not a ledger. It is not a blockchain. It is not a database with better encryption. Onli is ownership technology — the primitive layer on which real digital property is built. One asset. One owner. There is only one.\nEverything down to the asset, the owner, and the Vault. Learn what Onli is, how it works, and what you can build on top of it.\nExplore use cases and white papers.",
-    image: "/images/withonli.png",
-  },
   {
     id: "onli-you",
     pill1: "onli you",
