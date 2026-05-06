@@ -4,7 +4,6 @@ import { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useViewport } from '@/context/ViewportContext';
 import styles from './ScrollStackSection.module.css';
 
 if (typeof window !== 'undefined') {
@@ -29,12 +28,13 @@ interface ScrollStackSectionProps {
 export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const viewport = useViewport();
 
   const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
   
-  // Use viewport's hydration state instead of local mounted state
-  const mounted = viewport.isHydrated;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
