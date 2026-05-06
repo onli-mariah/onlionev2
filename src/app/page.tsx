@@ -8,7 +8,7 @@ const onliCards: OnliCardData[] = [
   {
     id: "onli-one",
     pill1: "onli one",
-    pill2: "the protocl and the network",
+    pill2: "the protocol and the network",
     pill3: "move value around and keep it safe",
     title: "The protocol and private network for moving digital property.",
     body: [
@@ -21,9 +21,10 @@ const onliCards: OnliCardData[] = [
   },
   {
     id: "onli-asset",
-    pill1: "with.onli",
+    pill1: "onli",
     pill2: "the primitive",
     pill3: "hyper-dimensional vector storage object",
+    href: "https://www.withonli.com/",
     title: "An asset is property owned. Onli is an asset class.",
     body: [
       "Onli is a possession-native digital object: a hyper dimensional vector storage container bound to an owner credential and held inside a Vault. In the context of financial assets it makes ownership structural by binding the asset, owner, and Vault into one verifiable possession state. It is not a record of ownership. It is the owned thing itself.",
