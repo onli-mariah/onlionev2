@@ -150,8 +150,8 @@ export default function OnliScrollStackSection({ cards }: OnliScrollStackSection
                 </div>
               </div>
               
-              {/* Scroll indicator on first card only */}
-              {index === 0 && (
+              {/* Scroll indicator on first two cards */}
+              {index <= 1 && (
                 <div className={styles.scrollIndicator}>
                   <svg 
                     width="24" 
