@@ -21,7 +21,7 @@ const onliCards: OnliCardData[] = [
   },
   {
     id: "onli-asset",
-    pill1: "onli",
+    pill1: "with.onli",
     pill2: "the primitive",
     pill3: "hyper-dimensional vector storage object",
     href: "https://www.withonli.com/",
