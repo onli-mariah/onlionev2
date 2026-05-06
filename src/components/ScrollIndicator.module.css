@@ -1,0 +1,54 @@
+.container {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-text-body, #555);
+  opacity: 0.7;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+.text {
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: lowercase;
+  letter-spacing: 0.05em;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    bottom: 24px;
+  }
+  
+  .indicator {
+    gap: 2px;
+  }
+  
+  .indicator svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .text {
+    font-size: 10px;
+  }
+}
