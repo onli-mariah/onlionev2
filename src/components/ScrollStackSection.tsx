@@ -87,13 +87,14 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
         zIndex: (i) => i
       });
 
-      // Increased scroll distance: 
-      // - 2 units for initial first card hold
-      // - 2 units pause + 1.5 units transition per card change
-      // - 2 units for final card hold
-      const scrollPerTransition = 3.5; // More scroll required between cards
-      const initialHold = 2; // Extra scroll before first transition starts
-      const finalHold = 2; // Hold on the last card
+      // Scroll distance calculation:
+      // - 3 units for initial first card hold (sticky on scroll down)
+      // - 3 units pause + 2 units transition per card change (more intentional scrolling)
+      // - 3 units for final last card hold
+      // When scrolling back up, the timeline reverses - so first card gets the initial hold again
+      const scrollPerTransition = 5; // Significantly more scroll required between cards
+      const initialHold = 3; // Extra scroll before first transition starts (also applies when scrolling back up)
+      const finalHold = 3; // Hold on the last card
       const totalScroll = (initialHold + (totalCards - 1) * scrollPerTransition + finalHold) * 100;
 
       const tl = gsap.timeline({
@@ -102,12 +103,12 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
           start: "top top",
           end: `+=${totalScroll}%`,
           pin: true,
-          scrub: 2, // Increased scrub for smoother, less sensitive scrolling
+          scrub: 2.5, // Smoother, less sensitive scrolling
           invalidateOnRefresh: true,
         }
       });
 
-      // Initial hold - keep first card visible for longer scroll
+      // Initial hold - keep first card visible for longer scroll (works both directions)
       tl.to({}, { duration: initialHold });
 
       // Safari fallback: use simple opacity crossfade instead of SVG masks
@@ -117,17 +118,17 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
         gsap.set(cardsRef.current.slice(1), { opacity: 0 });
         
         for (let i = 1; i < totalCards; i++) {
-          tl.to({}, { duration: 2 }); // Longer pause to show the previous card
+          tl.to({}, { duration: 3 }); // Hold current card for a full scroll
           
           // Crossfade: fade out previous, fade in current
           tl.to(cardsRef.current[i - 1], {
             opacity: 0,
-            duration: 0.75,
+            duration: 1,
             ease: 'power2.inOut',
           }, `card${i}`)
           .to(cardsRef.current[i], {
             opacity: 1,
-            duration: 0.75,
+            duration: 1,
             ease: 'power2.inOut',
           }, `card${i}`);
         }
@@ -136,7 +137,7 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
       } else {
         // Standard grid mask reveal animation for Chrome, Firefox, etc.
         for (let i = 1; i < totalCards; i++) {
-          tl.to({}, { duration: 2 }); // Longer pause to show the previous card
+          tl.to({}, { duration: 3 }); // Hold current card for a full scroll
 
           const cells = gsap.utils.toArray(`.mask-cell-${i}`);
           const ordered: Element[] = [];
@@ -155,7 +156,7 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
 
           tl.to(ordered, {
             opacity: 1,
-            duration: 1.5, // Slightly longer transition
+            duration: 2, // Longer transition for more intentional feel
             ease: 'power3.out',
             stagger: {
               each: 0.02,
