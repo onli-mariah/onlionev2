@@ -207,6 +207,7 @@
 
 .onliOneTitleCol {
   padding-right: var(--space-4);
+  align-self: start;
 }
 
 .onliOneTitleCol h1 {
@@ -229,6 +230,7 @@
   background-color: #f4f4f4;
   border-radius: 24px;
   padding: 32px;
+  align-self: start;
 }
 
 .onliOneBodyCol p {
