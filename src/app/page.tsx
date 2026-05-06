@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 const stackCards: StackCardData[] = [
   {
     id: "withonli",
-    pill1: "1.0 onli",
+    pill1: "1.1 onli",
     pill2: "the primitive",
     pill3: "withonli.com",
     href: "https://withonli.com/",
@@ -16,7 +16,7 @@ const stackCards: StackCardData[] = [
   },
   {
     id: "onli-you",
-    pill1: "2.0 onli",
+    pill1: "1.2 onli",
     pill2: "authentication",
     pill3: "onli.you",
     href: "https://www.onli.you/",
@@ -26,7 +26,7 @@ const stackCards: StackCardData[] = [
   },
   {
     id: "onli-cloud",
-    pill1: "3.0 onli",
+    pill1: "1.3 onli",
     pill2: "orchestration",
     pill3: "onli.cloud",
     href: "https://www.onli.cloud/",
@@ -36,7 +36,7 @@ const stackCards: StackCardData[] = [
   },
   {
     id: "onli-ai",
-    pill1: "4.0 onli",
+    pill1: "1.4 onli",
     pill2: "intent layer",
     pill3: "onli.ai",
     href: "https://www.onli.ai/",
