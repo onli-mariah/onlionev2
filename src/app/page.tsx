@@ -7,9 +7,9 @@ import styles from "./page.module.css";
 const onliCards: OnliCardData[] = [
   {
     id: "onli-one",
-    pill1: "onli",
-    pill2: "onli one",
-    pill3: "the protocol and the network",
+    pill1: "onli one",
+    pill2: "the protocl and the network",
+    pill3: "move value around and keep it safe",
     title: "The protocol and private network for moving digital property.",
     body: [
       "Onli One lets owners, vaults, appliances, and services connect directly when a digital asset needs to move — without public exposure, complex networking, or trusted intermediaries.",
@@ -21,8 +21,8 @@ const onliCards: OnliCardData[] = [
   },
   {
     id: "onli-asset",
-    pill1: "genome",
-    pill2: "the asset",
+    pill1: "onli",
+    pill2: "the primitive",
     pill3: "hyper-dimensional vector storage object",
     title: "An asset is property owned. Onli is an asset class.",
     body: [
@@ -38,9 +38,9 @@ const onliCards: OnliCardData[] = [
 const stackCards: StackCardData[] = [
   {
     id: "withonli",
-    pill1: "onli",
-    pill2: "the primitive",
-    pill3: "withonli.com",
+    pill1: "with onli",
+    pill2: "how it works",
+    pill3: "read use cases and white papers",
     href: "https://withonli.com/",
     title: "An asset is property owned. That definition is not metaphorical. It is structural.",
     body: "Onli is not a ledger. It is not a blockchain. It is not a database with better encryption. Onli is ownership technology — the primitive layer on which real digital property is built. One asset. One owner. There is only one.\nEverything down to the asset, the owner, and the Vault. Learn what Onli is, how it works, and what you can build on top of it.\nExplore use cases and white papers.",
@@ -48,9 +48,9 @@ const stackCards: StackCardData[] = [
   },
   {
     id: "onli-you",
-    pill1: "onli",
-    pill2: "authentication",
-    pill3: "onli.you",
+    pill1: "onli you",
+    pill2: "the storage layer",
+    pill3: "authentication and storage",
     href: "https://www.onli.you/",
     title: "Create your Onli ID. Because there is only one you.",
     body: "Onli.You is free. Download it on the Apple App Store, verify once, and your identity becomes an unforgeable credential — your Gene. Not an account. Not a username. An owner.\nYou control your identity. You control your assets. Onli provides the infrastructure. Your Vault, your passport, your sovereignty. One profile to rule them all.\nGet the app. Become an owner.",
@@ -58,9 +58,9 @@ const stackCards: StackCardData[] = [
   },
   {
     id: "onli-cloud",
-    pill1: "onli",
-    pill2: "orchestration",
-    pill3: "onli.cloud",
+    pill1: "onli cloud",
+    pill2: "the orchestration layer",
+    pill3: "connect app-liances to owners",
     href: "https://www.onli.cloud/",
     title: "This is where ownership becomes an economy.",
     body: "Onli.Cloud is the developer console for the Possession Economy. Configure your Genome. Build your Appliance. Manage your Treasury. Issue to your owners. Genotype is destiny — get the design right, and the system works with you everywhere.\nAppliances never touch assets. Owners are always in control. Custody risk is eliminated by design.\nJoin the revolution no one saw coming.",
@@ -69,8 +69,8 @@ const stackCards: StackCardData[] = [
   {
     id: "onli-ai",
     pill1: "onli",
-    pill2: "intent layer",
-    pill3: "onli.ai",
+    pill2: "the intent layer",
+    pill3: "natural language into infrastructure",
     href: "https://www.onli.ai/",
     title: "What if a single sentence could create a whole economy?",
     body: "Onli.AI translates natural language into ownership operations. Describe what should happen — the system resolves the path. Natural language changes how you express intent. It does not change who is allowed to authorize it.\nExpression is human. Planning is computational. Authorization is ownership.\nNow go build something intelligent.",
