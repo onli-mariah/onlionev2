@@ -40,8 +40,21 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
   const [grid, setGrid] = useState({ cols: 14, rows: 10 });
   const [isMobile, setIsMobile] = useState(false);
   
-  // Safari-specific: use simpler animation approach if SVG masks are not well supported
-  const useSafariMode = viewport.browser.isSafari && !viewport.features.supportsSVGMasks;
+  // Safari-specific: always use simpler animation approach for Safari
+  // SVG mask animations have known issues in Safari regardless of version
+  const useSafariMode = viewport.browser.isSafari;
+  
+  // Debug logging for Safari issues
+  useEffect(() => {
+    if (viewport.isHydrated) {
+      console.log("[v0] Browser detection:", {
+        isSafari: viewport.browser.isSafari,
+        browserName: viewport.browser.name,
+        useSafariMode,
+        supportsSVGMasks: viewport.features.supportsSVGMasks
+      });
+    }
+  }, [viewport.isHydrated, viewport.browser.isSafari, viewport.browser.name, useSafariMode, viewport.features.supportsSVGMasks]);
   
   // Use viewport's hydration state instead of local mounted state
   const mounted = viewport.isHydrated;
@@ -111,24 +124,29 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
       // Initial hold - keep first card visible for longer scroll (works both directions)
       tl.to({}, { duration: initialHold });
 
-      // Safari fallback: use simple opacity crossfade instead of SVG masks
+      // Safari fallback: use simple slide/fade animation instead of SVG masks
       if (useSafariMode) {
-        // Set initial state - all cards visible but stacked
-        gsap.set(cardsRef.current, { opacity: 1 });
-        gsap.set(cardsRef.current.slice(1), { opacity: 0 });
+        console.log("[v0] Using Safari fallback animation for", totalCards, "cards");
+        
+        // Set initial state - all cards stacked, only first visible
+        // Each card slides up from below to reveal
+        cardsRef.current.forEach((card, i) => {
+          if (card) {
+            gsap.set(card, { 
+              opacity: 1,
+              yPercent: i === 0 ? 0 : 100, // First card in place, others below viewport
+              zIndex: i // Normal z-index order (later cards on top when they slide in)
+            });
+          }
+        });
         
         for (let i = 1; i < totalCards; i++) {
           tl.to({}, { duration: 3 }); // Hold current card for a full scroll
           
-          // Crossfade: fade out previous, fade in current
-          tl.to(cardsRef.current[i - 1], {
-            opacity: 0,
-            duration: 1,
-            ease: 'power2.inOut',
-          }, `card${i}`)
-          .to(cardsRef.current[i], {
-            opacity: 1,
-            duration: 1,
+          // Slide the next card up from below
+          tl.to(cardsRef.current[i], {
+            yPercent: 0,
+            duration: 2,
             ease: 'power2.inOut',
           }, `card${i}`);
         }
