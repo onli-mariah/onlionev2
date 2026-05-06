@@ -178,7 +178,7 @@
 .onliOnePillsRow {
   display: grid;
   grid-template-columns: 2fr 3fr 7fr;
-  gap: var(--space-4);
+  gap: var(--space-2);
   margin-bottom: var(--space-4);
 }
 
@@ -226,6 +226,9 @@
   line-height: 1.6;
   font-weight: 300;
   color: var(--color-text-body, #555);
+  background-color: var(--color-pill-bg, #f2f2f2);
+  border-radius: 24px;
+  padding: 32px;
 }
 
 .onliOneBodyCol p {
