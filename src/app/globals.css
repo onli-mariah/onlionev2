@@ -53,6 +53,11 @@ body {
   font-family: var(--font-montserrat), sans-serif;
 }
 
+/* Design token utility class for background */
+.bg-background {
+  background-color: var(--surface-light);
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -117,4 +122,53 @@ ul, ol {
 
 .animate-in {
   opacity: 0;
+}
+
+/* Safari-specific fixes */
+@supports (-webkit-touch-callout: none) {
+  /* Fix for Safari's viewport height on mobile */
+  .full-height {
+    height: -webkit-fill-available;
+  }
+  
+  /* Fix sticky positioning in Safari */
+  .sticky-fix {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+  
+  /* Hardware acceleration for smooth animations */
+  .hw-accelerate {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+}
+
+/* iOS safe area support */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-in {
+    opacity: 1;
+  }
 }

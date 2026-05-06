@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useViewport } from '@/context/ViewportContext';
 import styles from './ScrollStackSection.module.css';
 
 if (typeof window !== 'undefined') {
@@ -34,13 +35,19 @@ function getGridCols(width: number) {
 export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const viewport = useViewport();
 
   const [grid, setGrid] = useState({ cols: 14, rows: 10 });
-  const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  
+  // Safari-specific: use simpler animation approach if SVG masks are not well supported
+  const useSafariMode = viewport.browser.isSafari && !viewport.features.supportsSVGMasks;
+  
+  // Use viewport's hydration state instead of local mounted state
+  const mounted = viewport.isHydrated;
 
   useEffect(() => {
-    setMounted(true);
+    if (typeof window === 'undefined') return;
     
     function handleResize() {
       const width = window.innerWidth;
@@ -73,7 +80,7 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
     const totalCards = cards.length;
     const mm = gsap.matchMedia(containerRef);
 
-    // Desktop only (large screens) - Grid mask reveal animation
+    // Desktop only (large screens)
     mm.add("(min-width: 1025px)", () => {
       gsap.set(cardsRef.current, { 
         yPercent: 0,
@@ -93,35 +100,61 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
         }
       });
 
-      for (let i = 1; i < totalCards; i++) {
-        tl.to({}, { duration: 1 }); // Pause to show the previous card
+      // Safari fallback: use simple opacity crossfade instead of SVG masks
+      if (useSafariMode) {
+        // Set initial state - all cards visible but stacked
+        gsap.set(cardsRef.current, { opacity: 1 });
+        gsap.set(cardsRef.current.slice(1), { opacity: 0 });
+        
+        for (let i = 1; i < totalCards; i++) {
+          tl.to({}, { duration: 1 }); // Pause to show the previous card
+          
+          // Crossfade: fade out previous, fade in current
+          tl.to(cardsRef.current[i - 1], {
+            opacity: 0,
+            duration: 0.5,
+            ease: 'power2.inOut',
+          }, `card${i}`)
+          .to(cardsRef.current[i], {
+            opacity: 1,
+            duration: 0.5,
+            ease: 'power2.inOut',
+          }, `card${i}`);
+        }
+        
+        tl.to({}, { duration: 1 }); // Pause at the end
+      } else {
+        // Standard grid mask reveal animation for Chrome, Firefox, etc.
+        for (let i = 1; i < totalCards; i++) {
+          tl.to({}, { duration: 1 }); // Pause to show the previous card
 
-        const cells = gsap.utils.toArray(`.mask-cell-${i}`);
-        const ordered: Element[] = [];
+          const cells = gsap.utils.toArray(`.mask-cell-${i}`);
+          const ordered: Element[] = [];
 
-        for (let x = 0; x < grid.cols; x++) {
-          const column: Element[] = [];
-          for (let y = 0; y < grid.rows; y++) {
-            const index = y * grid.cols + x;
-            if (cells[index]) {
-              column.push(cells[index] as Element);
+          for (let x = 0; x < grid.cols; x++) {
+            const column: Element[] = [];
+            for (let y = 0; y < grid.rows; y++) {
+              const index = y * grid.cols + x;
+              if (cells[index]) {
+                column.push(cells[index] as Element);
+              }
             }
+            const shuffledColumn = gsap.utils.shuffle(column);
+            ordered.push(...shuffledColumn);
           }
-          const shuffledColumn = gsap.utils.shuffle(column);
-          ordered.push(...shuffledColumn);
+
+          tl.to(ordered, {
+            opacity: 1,
+            duration: 1,
+            ease: 'power3.out',
+            stagger: {
+              each: 0.02,
+            },
+          });
         }
 
-        tl.to(ordered, {
-          opacity: 1,
-          duration: 1,
-          ease: 'power3.out',
-          stagger: {
-            each: 0.02,
-          },
-        });
+        tl.to({}, { duration: 1 }); // Pause at the end
       }
-
-      tl.to({}, { duration: 1 }); // Pause at the end
     });
 
     // Mobile & Tablet - No GSAP animation, CSS handles the stacked layout
@@ -131,12 +164,15 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
     });
 
     return () => mm.revert();
-  }, { scope: containerRef, dependencies: [mounted, grid, cards.length] });
+  }, { scope: containerRef, dependencies: [mounted, grid, cards.length, useSafariMode] });
 
   // Do not render masks until mounted on client to prevent hydration mismatch
+  // Skip SVG masks entirely in Safari mode
+  const shouldRenderMasks = mounted && !isMobile && !useSafariMode;
+  
   return (
     <section className={styles.container} ref={containerRef}>
-      {mounted && !isMobile && (
+      {shouldRenderMasks && (
         <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }}>
           <defs>
             {cards.map((_, i) => {
@@ -179,8 +215,8 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
 
       <div className={styles.stickyWrapper}>
         {cards.map((card, index) => {
-          // Only apply masks on desktop - mobile uses simple stacking
-          const maskStyle = index > 0 && mounted && !isMobile ? {
+          // Only apply masks on desktop when not in Safari mode
+          const maskStyle = index > 0 && shouldRenderMasks ? {
             WebkitMaskImage: `url(#card-mask-${index})`,
             maskImage: `url(#card-mask-${index})`,
             WebkitMaskSize: '100% 100%',
