@@ -55,6 +55,13 @@
   overflow: hidden;
 }
 
+.contentWrapper {
+  padding-left: 32px;
+  padding-right: 32px;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
 @media (max-width: 767px) {
   .contentWrapper {
     padding-left: 24px;
@@ -66,23 +73,6 @@
   .contentWrapper {
     padding-left: 80px;
     padding-right: 80px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .contentWrapper {
-    padding-left: 32px;
-    padding-right: 32px;
-    max-width: 1800px;
-    margin: 0 auto;
-  }
-}
-
-/* Smaller desktop/laptop screens - tighter padding */
-@media (min-width: 1025px) and (max-width: 1199px) {
-  .contentWrapper {
-    padding-left: 24px;
-    padding-right: 24px;
   }
 }
 
