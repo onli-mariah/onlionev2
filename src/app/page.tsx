@@ -1,9 +1,10 @@
 import Hero from "@/components/Hero";
 import ScrollStackSection, { StackCardData } from "@/components/ScrollStackSection";
-import OnliScrollStackSection, { OnliStackCardData } from "@/components/OnliScrollStackSection";
+import OnliStaticSection, { OnliCardData } from "@/components/OnliStaticSection";
+import ScrollIndicator from "@/components/ScrollIndicator";
 import styles from "./page.module.css";
 
-const onliCards: OnliStackCardData[] = [
+const onliCards: OnliCardData[] = [
   {
     id: "onli-one",
     pill1: "0.0 onli",
@@ -82,11 +83,14 @@ export default function Home() {
     <main className={styles.main}>
       <Hero />
 
-      {/* Section: Onli One (Scrollable Stacked Cards) */}
-      <OnliScrollStackSection cards={onliCards} />
+      {/* Section: Onli 0.x (Static stacked cards) */}
+      <OnliStaticSection cards={onliCards} />
 
-      {/* Section: The Stack (Scrollable Stacked Cards) */}
+      {/* Section: The Stack 1.x (Scroll-locked stacked cards) */}
       <ScrollStackSection cards={stackCards} />
+
+      {/* Global scroll indicator - visible until footer */}
+      <ScrollIndicator />
     </main>
   );
 }
