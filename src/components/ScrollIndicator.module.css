@@ -1,7 +1,10 @@
 .container {
   position: fixed;
   bottom: 32px;
-  left: 50%;
+  /* Align under pill c1: max-width 1600px centered, first column is 2fr out of 12fr total */
+  /* Left edge of content: calc((100vw - min(1600px, 100vw - 2rem)) / 2 + 1rem) */
+  /* Center of first column (2fr / 12fr = 1/6): + (min(1600px, 100vw - 2rem) * 1/12) */
+  left: calc((100vw - min(1600px, 100vw - 2rem)) / 2 + 1rem + (min(1600px, 100vw - 2rem) * 1 / 12));
   transform: translateX(-50%);
   z-index: 100;
   pointer-events: none;
@@ -13,7 +16,7 @@
   align-items: center;
   gap: 4px;
   color: var(--color-text-body, #555);
-  opacity: 0.7;
+  opacity: 0.5;
   animation: bounce 2s infinite ease-in-out;
 }
 
@@ -37,6 +40,8 @@
 @media (max-width: 767px) {
   .container {
     bottom: 24px;
+    left: 1rem;
+    transform: translateX(0);
   }
   
   .indicator {
