@@ -68,13 +68,10 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
 
     // Desktop only (large screens)
     mm.add("(min-width: 1025px)", () => {
-      // Scroll distance calculation:
-      // - 3 units for initial first card hold (sticky on scroll down)
-      // - 3 units pause + 2 units transition per card change (more intentional scrolling)
-      // - 3 units for final last card hold
-      const scrollPerTransition = 5;
-      const initialHold = 3;
-      const finalHold = 3;
+      // Scroll distance calculation - lighter feel for slide animation
+      const scrollPerTransition = 3;
+      const initialHold = 1.5;
+      const finalHold = 1.5;
       const totalScroll = (initialHold + (totalCards - 1) * scrollPerTransition + finalHold) * 100;
 
       const tl = gsap.timeline({
@@ -83,33 +80,32 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
           start: "top top",
           end: `+=${totalScroll}%`,
           pin: true,
-          scrub: 2.5,
+          scrub: 1.5,
           invalidateOnRefresh: true,
         }
       });
 
-      // Initial hold - keep first card visible for longer scroll
+      // Initial hold - keep first card visible briefly
       tl.to({}, { duration: initialHold });
 
-      // Use slide-up animation for ALL browsers (more reliable than SVG masks)
-      // Each card slides up from below to cover the previous one
+      // Slide-up animation - each card slides up from below
       cardsRef.current.forEach((card, i) => {
         if (card) {
           gsap.set(card, { 
-            yPercent: i === 0 ? 0 : 100, // First card in place, others below viewport
-            zIndex: i, // Later cards on top
+            yPercent: i === 0 ? 0 : 100,
+            zIndex: i,
             opacity: 1
           });
         }
       });
       
       for (let i = 1; i < totalCards; i++) {
-        tl.to({}, { duration: 3 }); // Hold current card for a full scroll
+        tl.to({}, { duration: 1.5 }); // Hold current card
         
-        // Slide the next card up from below
+        // Slide the next card up
         tl.to(cardsRef.current[i], {
           yPercent: 0,
-          duration: 2,
+          duration: 1.5,
           ease: 'power2.inOut',
         }, `card${i}`);
       }
