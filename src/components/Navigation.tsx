@@ -32,9 +32,9 @@ export default function Navigation() {
 
       {/* Right Pill: CTA */}
       <div className={`${styles.pill} ${styles.ctaPillContainer} animate-in`}>
-        <Link href="#get-started" className={`${styles.navLink} inter`}>
+        <a href="https://withonli.com/" target="_blank" rel="noopener noreferrer" className={`${styles.navLink} inter`}>
           get started
-        </Link>
+        </a>
       </div>
     </nav>
   );
