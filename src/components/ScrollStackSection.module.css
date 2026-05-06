@@ -91,8 +91,7 @@
   position: relative;
   width: 100%;
   height: auto;
-  max-height: 65vh;
-  border-radius: 12px;
+  border-radius: 24px;
   overflow: hidden;
   background-color: #f5f5f5;
   align-self: start;
@@ -104,7 +103,7 @@
   object-fit: contain;
   object-position: top left;
   display: block;
-  max-height: 65vh;
+  border-radius: 24px;
 }
 
 /* Tablet Layout */
@@ -146,15 +145,16 @@
 
   .imageContainer {
     grid-column: 1;
-    height: 400px;
-    min-height: 300px;
+    height: auto;
+    min-height: 0;
     max-height: none;
   }
 
   .image {
     max-height: none;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
+    object-position: top left;
   }
 }
 
@@ -216,15 +216,16 @@
 
   .imageContainer {
     grid-column: 1;
-    height: 250px;
-    min-height: 200px;
+    height: auto;
+    min-height: 0;
     max-height: none;
     margin-top: var(--space-2);
   }
 
   .image {
     max-height: none;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
+    object-position: top left;
   }
 }
