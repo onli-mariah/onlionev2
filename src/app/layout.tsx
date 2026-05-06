@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "onli.one - True Digital Ownership",
+  title: "onli.one",
   description: "Possession without ledgers, control without consensus.",
 };
 
