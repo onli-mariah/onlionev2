@@ -1,79 +1,28 @@
 .container {
   position: relative;
-  /* Will be dynamically sized based on number of cards, e.g., 400vh for 4 cards */
   width: 100%;
-}
-
-.stickyWrapper {
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  /* Fallback to svh for mobile if supported */
-  height: 100svh;
-  width: 100%;
-  overflow: hidden;
-  background-color: var(--surface-light, #f6f6f6); /* Match site bg */
-  /* Safari GPU acceleration */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-}
-
-/* Desktop: ensure content fits in viewport */
-@media (min-width: 1025px) {
-  .stickyWrapper {
-    display: flex;
-    align-items: stretch;
-  }
+  display: flex;
+  flex-direction: column;
 }
 
 .card {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  padding: var(--space-4) 0;
+  padding: var(--space-6) 0;
   background-color: var(--surface-light, #f6f6f6);
-  will-change: transform, opacity;
   box-sizing: border-box;
-  /* Safari GPU acceleration */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
 .contentWrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: 100%;
   box-sizing: border-box;
-  overflow: hidden;
-}
-
-.contentWrapper {
   padding-left: 32px;
   padding-right: 32px;
   max-width: 1800px;
   margin: 0 auto;
-}
-
-@media (max-width: 767px) {
-  .contentWrapper {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1199px) {
-  .contentWrapper {
-    padding-left: 80px;
-    padding-right: 80px;
-  }
 }
 
 .pillsRow {
@@ -81,13 +30,6 @@
   grid-template-columns: 2fr 3fr 7fr;
   gap: var(--space-4);
   margin-bottom: var(--space-4);
-  flex-shrink: 0;
-}
-
-@media (min-width: 1025px) and (max-height: 800px) {
-  .pillsRow {
-    margin-bottom: var(--space-3);
-  }
 }
 
 .pill {
@@ -101,13 +43,6 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-}
-
-@media (min-width: 1025px) and (max-height: 800px) {
-  .pill {
-    padding: 12px 20px;
-    font-size: 13px;
-  }
 }
 
 .pillLink {
@@ -125,9 +60,6 @@
   display: grid;
   grid-template-columns: 2fr 3fr 7fr;
   gap: var(--space-4);
-  flex: 1 1 0;
-  min-height: 0; /* Important for grid item sizing */
-  overflow: hidden;
 }
 
 .textContent {
@@ -136,8 +68,6 @@
   flex-direction: column;
   justify-content: flex-start;
   padding-right: var(--space-4);
-  overflow: hidden;
-  min-height: 0;
 }
 
 .textTitle {
@@ -147,14 +77,6 @@
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin-bottom: var(--space-3);
-  flex-shrink: 0;
-}
-
-@media (min-width: 1025px) and (max-height: 800px) {
-  .textTitle {
-    font-size: clamp(24px, 2.2vw, 36px);
-    margin-bottom: var(--space-2);
-  }
 }
 
 .textBody {
@@ -162,62 +84,53 @@
   line-height: 1.5;
   font-weight: 300;
   color: var(--color-text-body, #555);
-  overflow-y: auto;
-  flex: 1 1 auto;
-  min-height: 0;
-}
-
-@media (min-width: 1025px) and (max-height: 800px) {
-  .textBody {
-    font-size: 0.875rem;
-    line-height: 1.45;
-  }
-  
-  .textBody p {
-    margin-bottom: 0.75rem !important;
-  }
 }
 
 .imageContainer {
   grid-column: 3;
   position: relative;
   width: 100%;
-  height: 100%;
-  min-height: 0;
+  height: auto;
+  max-height: 65vh;
   border-radius: 12px;
   overflow: hidden;
   background-color: #f5f5f5;
+  align-self: start;
 }
 
 .image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
+  object-position: top left;
   display: block;
+  max-height: 65vh;
 }
 
-/* Tablet/Small Laptop Layout - stacked like mobile but with more spacing */
+/* Tablet Layout */
 @media (min-width: 768px) and (max-width: 1024px) {
-  .stickyWrapper {
-    position: relative;
-    height: auto;
-    overflow: visible;
+  .contentWrapper {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+
+  .pillsRow {
     display: flex;
     flex-direction: column;
-    gap: var(--space-8);
+    gap: var(--space-2);
   }
 
-  .card {
-    position: relative;
-    -webkit-mask-image: none !important;
-    mask-image: none !important;
-    padding: var(--space-8) 0;
-    height: auto;
-    min-height: auto;
+  .pill:nth-child(1) {
+    width: max-content;
+    padding-right: 40px;
   }
 
-  .contentWrapper {
-    height: auto;
+  .pill:nth-child(2) {
+    width: 60%;
+  }
+
+  .pill:nth-child(3) {
+    width: 100%;
   }
 
   .bodyGrid {
@@ -235,38 +148,25 @@
     grid-column: 1;
     height: 400px;
     min-height: 300px;
+    max-height: none;
+  }
+
+  .image {
+    max-height: none;
+    height: 100%;
+    object-fit: cover;
   }
 }
 
 /* Mobile Layout */
 @media (max-width: 767px) {
-  .stickyWrapper {
-    position: relative;
-    height: auto;
-    overflow: visible;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+  .contentWrapper {
+    padding-left: 24px;
+    padding-right: 24px;
   }
 
   .card {
-    position: relative;
-    -webkit-mask-image: none !important;
-    mask-image: none !important;
     padding: var(--space-4) 0;
-    height: auto;
-    min-height: auto;
-  }
-
-  .card:first-child {
-    padding-top: var(--space-6);
-  }
-
-  .contentWrapper {
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    overflow: visible;
   }
 
   .pillsRow {
@@ -281,18 +181,15 @@
     font-size: 13px;
   }
 
-  /* Shortest pill */
   .pill:nth-child(1) {
     width: max-content;
     padding-right: 40px;
   }
 
-  /* Middle length pill */
   .pill:nth-child(2) {
     width: 60%;
   }
 
-  /* Longest pill */
   .pill:nth-child(3) {
     width: 100%;
   }
@@ -301,16 +198,11 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
-    overflow: visible;
-    flex: none;
   }
 
   .textContent {
     grid-column: 1;
     padding-right: 0;
-    justify-content: flex-start;
-    overflow: visible;
-    min-height: auto;
   }
 
   .textTitle {
@@ -320,16 +212,19 @@
 
   .textBody {
     font-size: 1rem;
-    overflow: visible;
-    flex: none;
-    min-height: auto;
   }
 
   .imageContainer {
     grid-column: 1;
     height: 250px;
     min-height: 200px;
+    max-height: none;
     margin-top: var(--space-2);
-    overflow: visible;
+  }
+
+  .image {
+    max-height: none;
+    height: 100%;
+    object-fit: cover;
   }
 }

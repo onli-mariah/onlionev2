@@ -5,6 +5,7 @@ export interface OnliCardData {
   pill1: string;
   pill2: string;
   pill3: string;
+  href?: string;
   title: string;
   body: string[];
   conclusion?: string;
@@ -23,7 +24,14 @@ export default function OnliStaticSection({ cards }: OnliStaticSectionProps) {
             <div className={styles.pillsRow}>
               <div className={styles.pill}>{card.pill1}</div>
               <div className={styles.pill}>{card.pill2}</div>
-              <div className={styles.pill}>{card.pill3}</div>
+              {card.href ? (
+                <a href={card.href} target="_blank" rel="noopener noreferrer" className={`${styles.pill} ${styles.pillLink}`}>
+                  {card.pill3}
+                  <span className={styles.linkArrow}>→</span>
+                </a>
+              ) : (
+                <div className={styles.pill}>{card.pill3}</div>
+              )}
             </div>
             
             <div className={styles.bodyGrid}>

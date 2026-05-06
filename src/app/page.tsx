@@ -8,7 +8,7 @@ const onliCards: OnliCardData[] = [
   {
     id: "onli-one",
     pill1: "onli one",
-    pill2: "the protocl and the network",
+    pill2: "the protocol and the network",
     pill3: "move value around and keep it safe",
     title: "The protocol and private network for moving digital property.",
     body: [
@@ -21,9 +21,10 @@ const onliCards: OnliCardData[] = [
   },
   {
     id: "onli-asset",
-    pill1: "onli",
+    pill1: "with.onli",
     pill2: "the primitive",
     pill3: "hyper-dimensional vector storage object",
+    href: "https://www.withonli.com/",
     title: "An asset is property owned. Onli is an asset class.",
     body: [
       "Onli is a possession-native digital object: a hyper dimensional vector storage container bound to an owner credential and held inside a Vault. In the context of financial assets it makes ownership structural by binding the asset, owner, and Vault into one verifiable possession state. It is not a record of ownership. It is the owned thing itself.",
@@ -36,16 +37,6 @@ const onliCards: OnliCardData[] = [
 ];
 
 const stackCards: StackCardData[] = [
-  {
-    id: "withonli",
-    pill1: "with onli",
-    pill2: "how it works",
-    pill3: "read use cases and white papers",
-    href: "https://withonli.com/",
-    title: "An asset is property owned. That definition is not metaphorical. It is structural.",
-    body: "Onli is not a ledger. It is not a blockchain. It is not a database with better encryption. Onli is ownership technology — the primitive layer on which real digital property is built. One asset. One owner. There is only one.\nEverything down to the asset, the owner, and the Vault. Learn what Onli is, how it works, and what you can build on top of it.\nExplore use cases and white papers.",
-    image: "/images/withonli.png",
-  },
   {
     id: "onli-you",
     pill1: "onli you",
