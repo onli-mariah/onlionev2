@@ -46,6 +46,22 @@
   justify-content: flex-start;
 }
 
+.pillLink {
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  justify-content: space-between;
+}
+
+.pillLink:hover {
+  background-color: var(--color-pill-bg-hover, #e8e8e8);
+}
+
+.linkArrow {
+  margin-left: 8px;
+  font-size: 16px;
+}
+
 .bodyGrid {
   display: grid;
   grid-template-columns: 2fr 3fr 7fr;
