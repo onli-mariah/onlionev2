@@ -7,7 +7,7 @@ import styles from "./page.module.css";
 const onliCards: OnliCardData[] = [
   {
     id: "onli-one",
-    pill1: "onli one",
+    pill1: "onli.one",
     pill2: "the protocol and the network",
     pill3: "move value around and keep it safe",
     title: "The protocol and private network for moving digital property.",
@@ -39,7 +39,7 @@ const onliCards: OnliCardData[] = [
 const stackCards: StackCardData[] = [
   {
     id: "onli-you",
-    pill1: "onli you",
+    pill1: "onli.you",
     pill2: "the storage layer",
     pill3: "authentication and storage",
     href: "https://www.onli.you/",
@@ -49,7 +49,7 @@ const stackCards: StackCardData[] = [
   },
   {
     id: "onli-cloud",
-    pill1: "onli cloud",
+    pill1: "onli.cloud",
     pill2: "the orchestration layer",
     pill3: "connect app-liances to owners",
     href: "https://www.onli.cloud/",
@@ -59,7 +59,7 @@ const stackCards: StackCardData[] = [
   },
   {
     id: "onli-ai",
-    pill1: "onli",
+    pill1: "onli.ai",
     pill2: "the intent layer",
     pill3: "natural language into infrastructure",
     href: "https://www.onli.ai/",
