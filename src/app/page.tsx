@@ -64,7 +64,7 @@ const stackCards: StackCardData[] = [
     pill3: "natural language into infrastructure",
     href: "https://www.onli.ai/",
     title: "What if a single sentence could create a whole economy?",
-    body: "Onli.AI translates natural language into ownership operations. Describe what should happen — the system resolves the path. Natural language changes how you express intent. It does not change who is allowed to authorize it.\nExpression is human. Planning is computational. Authorization is ownership.\nNow go build something intelligent.",
+    body: "Infrastructure without code. \nOnli.AI is an intent layer that builds economic infrastructure on demand. Instead of spending years building backend systems, businesses can simply describe what they want in plain language: launch a marketplace, issue assets, create a fund, or move ownership; without writing a single line of code. AI handles intent. Onli.Cloud the connection. Onli.One handles ownership. \n Now go build something intelligent.",
     image: "/images/onliai.png",
   }
 ];
