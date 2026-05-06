@@ -187,6 +187,31 @@
   margin-top: 0.5rem;
 }
 
+.scrollIndicator {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--color-text-body, #555);
+  opacity: 0.6;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(8px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .scrollIndicator {
+    display: none;
+  }
+}
+
 /* Tablet/Small Laptop Layout */
 @media (min-width: 768px) and (max-width: 1024px) {
   .stickyWrapper {
