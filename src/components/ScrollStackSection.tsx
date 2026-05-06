@@ -70,7 +70,7 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
     mm.add("(min-width: 1025px)", () => {
       // Scroll distance - one scroll per card transition
       const scrollPerTransition = 2;
-      const initialHold = 1;
+      const initialHold = 0.1; // Reduced to eliminate bounce at start
       const finalHold = 1;
       const totalScroll = (initialHold + (totalCards - 1) * scrollPerTransition + finalHold) * 100;
 
