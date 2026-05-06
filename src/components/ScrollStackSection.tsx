@@ -40,8 +40,21 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
   const [grid, setGrid] = useState({ cols: 14, rows: 10 });
   const [isMobile, setIsMobile] = useState(false);
   
-  // Safari-specific: use simpler animation approach if SVG masks are not well supported
-  const useSafariMode = viewport.browser.isSafari && !viewport.features.supportsSVGMasks;
+  // Safari-specific: always use simpler animation approach for Safari
+  // SVG mask animations have known issues in Safari regardless of version
+  const useSafariMode = viewport.browser.isSafari;
+  
+  // Debug logging for Safari issues
+  useEffect(() => {
+    if (viewport.isHydrated) {
+      console.log("[v0] Browser detection:", {
+        isSafari: viewport.browser.isSafari,
+        browserName: viewport.browser.name,
+        useSafariMode,
+        supportsSVGMasks: viewport.features.supportsSVGMasks
+      });
+    }
+  }, [viewport.isHydrated, viewport.browser.isSafari, viewport.browser.name, useSafariMode, viewport.features.supportsSVGMasks]);
   
   // Use viewport's hydration state instead of local mounted state
   const mounted = viewport.isHydrated;
@@ -87,7 +100,15 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
         zIndex: (i) => i
       });
 
-      const totalScroll = (totalCards * 2 - 1) * 100;
+      // Scroll distance calculation:
+      // - 3 units for initial first card hold (sticky on scroll down)
+      // - 3 units pause + 2 units transition per card change (more intentional scrolling)
+      // - 3 units for final last card hold
+      // When scrolling back up, the timeline reverses - so first card gets the initial hold again
+      const scrollPerTransition = 5; // Significantly more scroll required between cards
+      const initialHold = 3; // Extra scroll before first transition starts (also applies when scrolling back up)
+      const finalHold = 3; // Hold on the last card
+      const totalScroll = (initialHold + (totalCards - 1) * scrollPerTransition + finalHold) * 100;
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -95,38 +116,46 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
           start: "top top",
           end: `+=${totalScroll}%`,
           pin: true,
-          scrub: 1,
+          scrub: 2.5, // Smoother, less sensitive scrolling
           invalidateOnRefresh: true,
         }
       });
 
-      // Safari fallback: use simple opacity crossfade instead of SVG masks
+      // Initial hold - keep first card visible for longer scroll (works both directions)
+      tl.to({}, { duration: initialHold });
+
+      // Safari fallback: use simple slide/fade animation instead of SVG masks
       if (useSafariMode) {
-        // Set initial state - all cards visible but stacked
-        gsap.set(cardsRef.current, { opacity: 1 });
-        gsap.set(cardsRef.current.slice(1), { opacity: 0 });
+        console.log("[v0] Using Safari fallback animation for", totalCards, "cards");
+        
+        // Set initial state - all cards stacked, only first visible
+        // Each card slides up from below to reveal
+        cardsRef.current.forEach((card, i) => {
+          if (card) {
+            gsap.set(card, { 
+              opacity: 1,
+              yPercent: i === 0 ? 0 : 100, // First card in place, others below viewport
+              zIndex: i // Normal z-index order (later cards on top when they slide in)
+            });
+          }
+        });
         
         for (let i = 1; i < totalCards; i++) {
-          tl.to({}, { duration: 1 }); // Pause to show the previous card
+          tl.to({}, { duration: 3 }); // Hold current card for a full scroll
           
-          // Crossfade: fade out previous, fade in current
-          tl.to(cardsRef.current[i - 1], {
-            opacity: 0,
-            duration: 0.5,
-            ease: 'power2.inOut',
-          }, `card${i}`)
-          .to(cardsRef.current[i], {
-            opacity: 1,
-            duration: 0.5,
+          // Slide the next card up from below
+          tl.to(cardsRef.current[i], {
+            yPercent: 0,
+            duration: 2,
             ease: 'power2.inOut',
           }, `card${i}`);
         }
         
-        tl.to({}, { duration: 1 }); // Pause at the end
+        tl.to({}, { duration: finalHold }); // Hold at the end
       } else {
         // Standard grid mask reveal animation for Chrome, Firefox, etc.
         for (let i = 1; i < totalCards; i++) {
-          tl.to({}, { duration: 1 }); // Pause to show the previous card
+          tl.to({}, { duration: 3 }); // Hold current card for a full scroll
 
           const cells = gsap.utils.toArray(`.mask-cell-${i}`);
           const ordered: Element[] = [];
@@ -145,7 +174,7 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
 
           tl.to(ordered, {
             opacity: 1,
-            duration: 1,
+            duration: 2, // Longer transition for more intentional feel
             ease: 'power3.out',
             stagger: {
               each: 0.02,
@@ -153,7 +182,7 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
           });
         }
 
-        tl.to({}, { duration: 1 }); // Pause at the end
+        tl.to({}, { duration: finalHold }); // Hold at the end
       }
     });
 
