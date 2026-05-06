@@ -67,7 +67,7 @@ export default function OnliScrollStackSection({ cards }: OnliScrollStackSection
     // Desktop only (large screens)
     mm.add("(min-width: 1025px)", () => {
       const scrollPerTransition = 2;
-      const initialHold = 1;
+      const initialHold = 0.3;
       const finalHold = 1;
       const totalScroll = (initialHold + (totalCards - 1) * scrollPerTransition + finalHold) * 100;
 
@@ -149,6 +149,27 @@ export default function OnliScrollStackSection({ cards }: OnliScrollStackSection
                   </div>
                 </div>
               </div>
+              
+              {/* Scroll indicator on first two cards */}
+              {index <= 1 && (
+                <div className={styles.scrollIndicator}>
+                  <svg 
+                    width="24" 
+                    height="24" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path 
+                      d="M6 9L12 15L18 9" 
+                      stroke="currentColor" 
+                      strokeWidth="2" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+              )}
             </div>
           );
         })}
