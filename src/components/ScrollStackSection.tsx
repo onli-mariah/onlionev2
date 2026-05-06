@@ -4,7 +4,6 @@ import { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useViewport } from '@/context/ViewportContext';
 import styles from './ScrollStackSection.module.css';
 
 if (typeof window !== 'undefined') {
@@ -26,48 +25,22 @@ interface ScrollStackSectionProps {
   cards: StackCardData[];
 }
 
-function getGridCols(width: number) {
-  if (width <= 599) return 6; // SP
-  if (width <= 1024) return 10; // Tablet
-  return 14; // PC
-}
-
 export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const viewport = useViewport();
 
-  const [grid, setGrid] = useState({ cols: 14, rows: 10 });
   const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
   
-  // Safari-specific: always use simpler animation approach for Safari
-  // SVG mask animations have known issues in Safari regardless of version
-  const useSafariMode = viewport.browser.isSafari;
-  
-  // Debug logging for Safari issues
   useEffect(() => {
-    if (viewport.isHydrated) {
-      console.log("[v0] Browser detection:", {
-        isSafari: viewport.browser.isSafari,
-        browserName: viewport.browser.name,
-        useSafariMode,
-        supportsSVGMasks: viewport.features.supportsSVGMasks
-      });
-    }
-  }, [viewport.isHydrated, viewport.browser.isSafari, viewport.browser.name, useSafariMode, viewport.features.supportsSVGMasks]);
-  
-  // Use viewport's hydration state instead of local mounted state
-  const mounted = viewport.isHydrated;
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
     function handleResize() {
       const width = window.innerWidth;
-      const height = window.innerHeight;
-      const cols = getGridCols(width);
-      const rows = Math.max(1, Math.round(cols * (height / width)));
-      setGrid({ cols, rows });
       // Treat tablets and mobile the same - stacked layout without pinning
       setIsMobile(width <= 1024);
     }
@@ -95,19 +68,10 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
 
     // Desktop only (large screens)
     mm.add("(min-width: 1025px)", () => {
-      gsap.set(cardsRef.current, { 
-        yPercent: 0,
-        zIndex: (i) => i
-      });
-
-      // Scroll distance calculation:
-      // - 3 units for initial first card hold (sticky on scroll down)
-      // - 3 units pause + 2 units transition per card change (more intentional scrolling)
-      // - 3 units for final last card hold
-      // When scrolling back up, the timeline reverses - so first card gets the initial hold again
-      const scrollPerTransition = 5; // Significantly more scroll required between cards
-      const initialHold = 3; // Extra scroll before first transition starts (also applies when scrolling back up)
-      const finalHold = 3; // Hold on the last card
+      // Scroll distance - one scroll per card transition
+      const scrollPerTransition = 2;
+      const initialHold = 1;
+      const finalHold = 1;
       const totalScroll = (initialHold + (totalCards - 1) * scrollPerTransition + finalHold) * 100;
 
       const tl = gsap.timeline({
@@ -116,74 +80,37 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
           start: "top top",
           end: `+=${totalScroll}%`,
           pin: true,
-          scrub: 2.5, // Smoother, less sensitive scrolling
+          scrub: 1,
           invalidateOnRefresh: true,
         }
       });
 
-      // Initial hold - keep first card visible for longer scroll (works both directions)
+      // Initial hold - one scroll before transition
       tl.to({}, { duration: initialHold });
 
-      // Safari fallback: use simple slide/fade animation instead of SVG masks
-      if (useSafariMode) {
-        console.log("[v0] Using Safari fallback animation for", totalCards, "cards");
-        
-        // Set initial state - all cards stacked, only first visible
-        // Each card slides up from below to reveal
-        cardsRef.current.forEach((card, i) => {
-          if (card) {
-            gsap.set(card, { 
-              opacity: 1,
-              yPercent: i === 0 ? 0 : 100, // First card in place, others below viewport
-              zIndex: i // Normal z-index order (later cards on top when they slide in)
-            });
-          }
-        });
-        
-        for (let i = 1; i < totalCards; i++) {
-          tl.to({}, { duration: 3 }); // Hold current card for a full scroll
-          
-          // Slide the next card up from below
-          tl.to(cardsRef.current[i], {
-            yPercent: 0,
-            duration: 2,
-            ease: 'power2.inOut',
-          }, `card${i}`);
-        }
-        
-        tl.to({}, { duration: finalHold }); // Hold at the end
-      } else {
-        // Standard grid mask reveal animation for Chrome, Firefox, etc.
-        for (let i = 1; i < totalCards; i++) {
-          tl.to({}, { duration: 3 }); // Hold current card for a full scroll
-
-          const cells = gsap.utils.toArray(`.mask-cell-${i}`);
-          const ordered: Element[] = [];
-
-          for (let x = 0; x < grid.cols; x++) {
-            const column: Element[] = [];
-            for (let y = 0; y < grid.rows; y++) {
-              const index = y * grid.cols + x;
-              if (cells[index]) {
-                column.push(cells[index] as Element);
-              }
-            }
-            const shuffledColumn = gsap.utils.shuffle(column);
-            ordered.push(...shuffledColumn);
-          }
-
-          tl.to(ordered, {
-            opacity: 1,
-            duration: 2, // Longer transition for more intentional feel
-            ease: 'power3.out',
-            stagger: {
-              each: 0.02,
-            },
+      // Slide-up animation - each card slides up from below
+      cardsRef.current.forEach((card, i) => {
+        if (card) {
+          gsap.set(card, { 
+            yPercent: i === 0 ? 0 : 100,
+            zIndex: i,
+            opacity: 1
           });
         }
-
-        tl.to({}, { duration: finalHold }); // Hold at the end
+      });
+      
+      for (let i = 1; i < totalCards; i++) {
+        tl.to({}, { duration: 1 }); // Hold current card for one scroll
+        
+        // Slide the next card up
+        tl.to(cardsRef.current[i], {
+          yPercent: 0,
+          duration: 1,
+          ease: 'power2.inOut',
+        }, `card${i}`);
       }
+      
+      tl.to({}, { duration: finalHold }); // Hold at the end
     });
 
     // Mobile & Tablet - No GSAP animation, CSS handles the stacked layout
@@ -193,71 +120,18 @@ export default function ScrollStackSection({ cards }: ScrollStackSectionProps) {
     });
 
     return () => mm.revert();
-  }, { scope: containerRef, dependencies: [mounted, grid, cards.length, useSafariMode] });
+  }, { scope: containerRef, dependencies: [mounted, cards.length] });
 
-  // Do not render masks until mounted on client to prevent hydration mismatch
-  // Skip SVG masks entirely in Safari mode
-  const shouldRenderMasks = mounted && !isMobile && !useSafariMode;
-  
   return (
     <section className={styles.container} ref={containerRef}>
-      {shouldRenderMasks && (
-        <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }}>
-          <defs>
-            {cards.map((_, i) => {
-              if (i === 0) return null; // First card doesn't need a mask
-              
-              const rects = [];
-              const cellW = 1 / grid.cols;
-              const cellH = 1 / grid.rows;
-              
-              for (let y = 0; y < grid.rows; y++) {
-                for (let x = 0; x < grid.cols; x++) {
-                  rects.push(
-                    <rect
-                      key={`${x}-${y}`}
-                      className={`mask-cell-${i}`}
-                      x={x * cellW}
-                      y={y * cellH}
-                      width={cellW + 0.005} // slight overlap to prevent visual gaps
-                      height={cellH + 0.005}
-                      fill="white"
-                      opacity="0"
-                      shapeRendering="crispEdges"
-                    />
-                  );
-                }
-              }
-
-              return (
-                <mask id={`card-mask-${i}`} key={i} maskContentUnits="objectBoundingBox">
-                  <rect x="0" y="0" width="1" height="1" fill="black" />
-                  <g>
-                    {rects}
-                  </g>
-                </mask>
-              );
-            })}
-          </defs>
-        </svg>
-      )}
-
       <div className={styles.stickyWrapper}>
         {cards.map((card, index) => {
-          // Only apply masks on desktop when not in Safari mode
-          const maskStyle = index > 0 && shouldRenderMasks ? {
-            WebkitMaskImage: `url(#card-mask-${index})`,
-            maskImage: `url(#card-mask-${index})`,
-            WebkitMaskSize: '100% 100%',
-            maskSize: '100% 100%',
-          } : {};
-
           return (
             <div 
               key={card.id} 
               className={styles.card}
               ref={(el) => { cardsRef.current[index] = el; }}
-              style={maskStyle}
+              data-card-index={index}
             >
               <div className={styles.contentWrapper}>
                 <div className={styles.pillsRow}>
